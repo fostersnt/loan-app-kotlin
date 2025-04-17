@@ -11,6 +11,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -25,9 +26,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Preview(showBackground = true)
 @Composable
 fun LoanAppScreen() {
-    var text by remember { mutableStateOf("Hello Compose!") }
+    var text by remember { mutableStateOf("Welcome to my loan app!") }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -41,3 +43,4 @@ fun LoanAppScreen() {
         }
     }
 }
+
