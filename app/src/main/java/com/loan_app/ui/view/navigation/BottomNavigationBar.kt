@@ -90,6 +90,7 @@ fun CustomBottomNavBar(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(70.dp)
+                .padding(16.dp)
                 .background(Color(AppColors.WHITE_COLOR)),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
@@ -100,18 +101,17 @@ fun CustomBottomNavBar(
                     verticalArrangement = Arrangement.Center,
                     modifier = Modifier
                         .fillMaxHeight()
-                        //                    .padding(bottom = 40.dp)
                         .clickable() { onItemSelected(index) }
                 ) {
                     Icon(
                         imageVector = item.icon,
                         contentDescription = item.title,
-                        tint = if (selectedIndex == index) Color.Blue else Color.Gray
+                        tint = if (selectedIndex == index) Color(AppColors.BACKGROUND_COLOR) else Color.Gray
                     )
                     Text(
                         text = item.title,
                         style = MaterialTheme.typography.labelSmall,
-                        color = if (selectedIndex == index) Color.Blue else Color.Gray,
+                        color = if (selectedIndex == index) Color(AppColors.BACKGROUND_COLOR) else Color.Gray,
                         fontSize = 10.sp
                     )
                 }
