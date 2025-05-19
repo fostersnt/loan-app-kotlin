@@ -10,7 +10,8 @@ import com.loan_app.data.model.AppRoutes
 data class BottomNavItem(
     val title: String,
     val icon: ImageVector,
-    val route: String // For navigation
+    val route: String,
+    val indexValue: Int
 )
 
 object BottomNavItems {
@@ -18,17 +19,20 @@ object BottomNavItems {
         BottomNavItem(
             title = "Home",
             icon = Icons.Filled.Home,
-            route = AppRoutes.HOME_SCREEN
+            route = AppRoutes.HOME_SCREEN,
+            indexValue = 0
         ),
         BottomNavItem(
             title = "Profile",
             icon = Icons.Filled.Person,
-            route = AppRoutes.PROFILE_SCREEN
+            route = AppRoutes.PROFILE_SCREEN,
+                    indexValue = 1
         ),
         BottomNavItem(
             title = "Settings",
             icon = Icons.Filled.Settings,
-            route = AppRoutes.SETTINGS_SCREEN
+            route = AppRoutes.SETTINGS_SCREEN,
+                    indexValue = 2
         )
     )
 }

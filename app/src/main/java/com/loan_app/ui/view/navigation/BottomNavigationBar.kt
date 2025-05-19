@@ -1,109 +1,110 @@
 package com.loan_app.ui.view.navigation
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.loan_app.data.model.AppColors
-import com.loan_app.data.model.AppRoutes
-import com.loan_app.utilities.customFontFamily
 
 @Composable
-fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
-    NavigationBar(
-        containerColor = Color(AppColors.WHITE_COLOR),
-//        contentColor = Color(AppColors.WHITE_COLOR)
-    ) {
-        BottomNavItems.list.forEachIndexed { currentIndex, item ->
-            NavigationBarItem(
-                colors = NavigationBarItemDefaults.colors(
-                    indicatorColor = Color(AppColors.BACKGROUND_COLOR),
-                    selectedIconColor = Color(AppColors.WHITE_COLOR),
-                    unselectedIconColor = Color(AppColors.BACKGROUND_COLOR),
-                    selectedTextColor = Color(AppColors.TEXT_COLOR_TEA_BLUE),
-                    unselectedTextColor = Color(AppColors.TEXT_COLOR_TEA_BLUE)
-                ),
-                icon = { Icon(imageVector = item.icon, contentDescription = item.title) },
-                label = {
-                    Text(
-                        text = item.title,
-                        fontSize = 16.sp,
-                        fontFamily = customFontFamily(),
-//                        color = Color.Black,
-                    )
-                },
-                selected = currentRoute == item.route,
-                onClick = {
-                    val targetRoute = item.route
+fun BottomNavigationBar(modifier: Modifier = Modifier) {
+    val navController = rememberNavController()
+    val startDestination = BottomNavItems.list[0];
+    var selectedDestination = rememberSaveable { mutableIntStateOf(startDestination.indexValue) }
 
-                    if (currentRoute != targetRoute) {
-                        navController.navigate(targetRoute) {
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    }
-                },
+    Scaffold(
+        modifier = modifier,
+        bottomBar = {
+            CustomBottomNavBar(
+                selectedIndex = selectedDestination.intValue,
+                onItemSelected = { index ->
+                    navController.navigate(BottomNavItems.list[index].route)
+                    selectedDestination.intValue = index
+                }
             )
-        }
-    }
-}
-
-
-//fun BottomNavigationBar(navController: NavHostController) {
-//    var selectedIndex = rememberSaveable { mutableIntStateOf(0) }
-//
-//    Scaffold(
-////        topBar = {
-////            TopAppBar(title = {Text("Loan App")}, modifier = Modifier.statusBarsPadding())
-////        },
-//        bottomBar = {
-//            NavigationBar {
-//                BottomNavItems.list.forEachIndexed { currentIndex, item ->
+//            NavigationBar(
+//                windowInsets = NavigationBarDefaults.windowInsets,
+//                containerColor = Color(AppColors.WHITE_COLOR),
+//            ) {
+//                BottomNavItems.list.forEachIndexed { index, destination ->
 //                    NavigationBarItem(
-//                        icon = { Icon(imageVector = item.icon, contentDescription = item.title) },
-//                        label = {
-//                            Text(
-//                                text = item.title,
-//                                fontSize = 16.sp,
-//                                fontFamily = customFontFamily(),
-//                                color = Color.Black,
+//                        modifier = Modifier.height(80.dp),
+//                        selected = selectedDestination.intValue == index,
+//                        onClick = {
+//                            navController.navigate(route = destination.route)
+//                            selectedDestination.intValue = index
+//                        },
+//                        icon = {
+//                            Icon(
+//                                destination.icon,
+//                                contentDescription = destination.title
 //                            )
 //                        },
-//                        selected = selectedIndex.intValue == currentIndex,
-//                        onClick = {
-//                            selectedIndex.intValue = currentIndex
-////                            if (selectedIndex == 0){
-////                                navController.navigate(AppRoutes.HOME_SCREEN)
-////                            }else if (selectedIndex == 1){
-////                                navController.navigate(AppRoutes.PROFILE_SCREEN)
-////                            }else if (selectedIndex == 2){
-////                                navController.navigate(AppRoutes.SETTINGS_SCREEN)
-////                            }
-//                            if (navController.currentDestination?.route != item.route) {
-//                                navController.navigate(item.route) {
-//                                    popUpTo(navController.graph.startDestinationId) { saveState = true }
-//                                    launchSingleTop = true
-//                                    restoreState = true
-//                                }
-//                            }
-//                        },
+//                        label = { Text(destination.title) }
 //                    )
 //                }
 //            }
-//        },
-//        content = {myPadding -> NavigationGraph(navController, paddingValues = myPadding)}
-//    )
-//
-//}
+        }
+    ) { contentPadding ->
+        NavigationGraph(navController, contentPadding)
+    }
+}
+
+@Composable
+fun CustomBottomNavBar(
+    selectedIndex: Int,
+    onItemSelected: (Int) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(70.dp)
+            .background(Color(AppColors.WHITE_COLOR)),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        BottomNavItems.list.forEachIndexed { index, item ->
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxHeight()
+//                    .padding(bottom = 40.dp)
+                    .clickable() { onItemSelected(index) }
+            ) {
+                Icon(
+                    imageVector = item.icon,
+                    contentDescription = item.title,
+                    tint = if (selectedIndex == index) Color.Blue else Color.Gray
+                )
+                Text(
+                    text = item.title,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = if (selectedIndex == index) Color.Blue else Color.Gray,
+                    fontSize = 10.sp
+                )
+            }
+        }
+    }
+}

@@ -3,7 +3,6 @@ package com.loan_app
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -12,15 +11,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.firebase.FirebaseApp
 import com.loan_app.ui.theme.Loan_AppTheme
-import com.loan_app.ui.view.navigation.MainNavigationScreen
 import com.loan_app.utilities.FirebaseTokenManager
 import android.Manifest
-import android.widget.Toast
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.messaging.FirebaseMessaging
-import com.ocp.facesdk.FaceBox
-import com.ocp.facesdk.FaceDetectionParam
-import com.ocp.facesdk.FaceSDK
+import android.view.WindowInsets
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import com.loan_app.ui.view.navigation.BottomNavigationBar
 
 //import com.loan_app.utilities.FirebaseTokenManager
 
@@ -67,9 +64,17 @@ class MainActivity : ComponentActivity() {
 
         FirebaseTokenManager.getDeviceToken()
 
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+//        // Hide system bars
+        val controller = WindowInsetsControllerCompat(window, window.decorView)
+        controller.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        controller.hide(WindowInsetsCompat.Type.navigationBars())
+
         setContent {
             Loan_AppTheme {
-                MainNavigationScreen()
+                BottomNavigationBar();
             }
         }
     }

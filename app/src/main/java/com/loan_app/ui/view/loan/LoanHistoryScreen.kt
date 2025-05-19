@@ -63,8 +63,8 @@ fun LoanHistoryScreen(navController: NavController, viewModel: LoanHistoryViewMo
         if(loans.isNotEmpty()){
             LazyColumn(
                 modifier = Modifier
+//                    .padding(innerPadding)
                     .padding(innerPadding)
-                    .padding(16.dp)
                     .fillMaxSize()
             ) {
                 items(loans) { loan ->

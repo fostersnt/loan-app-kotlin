@@ -46,7 +46,7 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel = 
             TopAppBar(
                 title = { Text("Momo Accounts") },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
+                    containerColor = Color(AppColors.BACKGROUND_COLOR),
                     titleContentColor = Color.White
                 ),
                 navigationIcon = {

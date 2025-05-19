@@ -24,6 +24,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
@@ -63,6 +64,10 @@ fun ProfileScreen(navController: NavController) {
         topBar = {
             TopAppBar (
                 title = { Text("Profile") },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(AppColors.BACKGROUND_COLOR),
+                    titleContentColor = Color.White
+                ),
                 navigationIcon = {
                     IconButton(onClick = {
                         navController.popBackStack()
