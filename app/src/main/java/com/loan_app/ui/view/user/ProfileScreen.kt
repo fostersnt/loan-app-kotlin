@@ -69,12 +69,13 @@ fun ProfileScreen(navController: NavController) {
                     titleContentColor = Color.White
                 ),
                 navigationIcon = {
-                    IconButton(onClick = {
-                        navController.popBackStack()
-                    }) {
-                        Icon(
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        androidx.compose.material3.Icon(
                             imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = "Back",
+                            tint = Color(
+                                AppColors.WHITE_COLOR
+                            )
                         )
                     }
                 },
