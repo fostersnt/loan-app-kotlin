@@ -3,12 +3,16 @@ package com.loan_app.ui.view.navigation
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -76,34 +80,41 @@ fun CustomBottomNavBar(
     selectedIndex: Int,
     onItemSelected: (Int) -> Unit
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(70.dp)
-            .background(Color(AppColors.WHITE_COLOR)),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.CenterVertically
+    Card(
+        elevation = CardDefaults.cardElevation(10.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(AppColors.WHITE_COLOR)),
+        modifier = Modifier.padding(16.dp),
+        shape = RoundedCornerShape(50.dp)
     ) {
-        BottomNavItems.list.forEachIndexed { index, item ->
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .fillMaxHeight()
-//                    .padding(bottom = 40.dp)
-                    .clickable() { onItemSelected(index) }
-            ) {
-                Icon(
-                    imageVector = item.icon,
-                    contentDescription = item.title,
-                    tint = if (selectedIndex == index) Color.Blue else Color.Gray
-                )
-                Text(
-                    text = item.title,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = if (selectedIndex == index) Color.Blue else Color.Gray,
-                    fontSize = 10.sp
-                )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(70.dp)
+                .background(Color(AppColors.WHITE_COLOR)),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            BottomNavItems.list.forEachIndexed { index, item ->
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        //                    .padding(bottom = 40.dp)
+                        .clickable() { onItemSelected(index) }
+                ) {
+                    Icon(
+                        imageVector = item.icon,
+                        contentDescription = item.title,
+                        tint = if (selectedIndex == index) Color.Blue else Color.Gray
+                    )
+                    Text(
+                        text = item.title,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = if (selectedIndex == index) Color.Blue else Color.Gray,
+                        fontSize = 10.sp
+                    )
+                }
             }
         }
     }
